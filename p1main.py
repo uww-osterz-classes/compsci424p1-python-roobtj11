@@ -4,32 +4,54 @@ Name: Tyler Roob
 """
 import time
 
+
+
 PCBs = []
-PCB = list()
-children = list()
 
-def c(parent,children):
-  PCBs.append(PCB.append(parent
+class PCB:
+  def __init__(self):
+    self.parent = -1
+    self.children = [None]
+  def __init__(self,parent, children):
+    self.parent = parent
+    self.children = [children]
+
+  def __init__(self,parent):
+    self.parent = parent
+    self.children = [None]
+
+  def __set_children__(self,children):
+      self.children.append(children)
+      if(self.children[0]==None):
+        self.children.pop(0)
+      
+def showProcessInfo(PCBs):
+  for x in range(0,len(PCBs)-1):
+    if PCBs[x].children[0]!=None:
+      children_list = ""
+      for c in PCBs[x].children:
+        children_list= children_list + " "
+        c=str(c)
+        children_list= children_list + c
+      print("Process ", x,": parent is ", PCBs[x].parent, " and children are", children_list)
+    else:
+      print("Process ", x,": parent is ", PCBs[x].parent, " and has no children")
+
+def first(PCBs):
+  PCBs.append(PCB(-1))
+  print("Creating New Root")
+
+def create(parent,PCBs):
+  PCBs.append(PCB(parent))
+  PCBs[parent].__set_children__(len(PCBs)-1)
     
-###
-#class PCB:
-#  def __init__(self,parent, children):
-#    self.parent = parent
-#    self.children = children
-#  def __init__(self,parent):
-#    self.parent = parent
-#    self.children = None
-###
-PCBs = list()
-PCBs.append(
-
-def create_parentPid(id){
-}
-
-def v1(){
-
-}
-
+first(PCBs)
+create(0,PCBs)
+create(1,PCBs)
+create(1,PCBs)
+create(1,PCBs)
+create(3,PCBs)
+showProcessInfo(PCBs)
 """
 Version 1
 Version 1 of the process creation hierarchy uses linked lists to keep track of child processes. In Version 1, each process's control block (PCB) contains
