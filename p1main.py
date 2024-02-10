@@ -4,8 +4,6 @@ Name: Tyler Roob
 """
 import time
 
-
-
 class PCB:
   def __init__(self,parent):
     self.parent = parent
@@ -59,8 +57,8 @@ def create(parent):
 
 def destroy(p):
   for x in PCBs[p].children:
-    PCBs.pop(x)
-  PCBs.pop(p)
+    destroy[x]
+  PCBs[p] = None
 
 
 
