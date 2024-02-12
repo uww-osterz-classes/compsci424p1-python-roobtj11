@@ -32,23 +32,23 @@ def showProcessInfo(PCBs):
       print("Process ",x,": parent is ",PCBs[x].parent," and has no children")
 
 def v1(command_list):
-  print("v1:")
+#  print("v1:")
   p = 0
   v1_PCBs = {}
   for command in command_list:
     if command.command == 'create':
-      print(f"Trying to Create {p} with Parent {command.n}")
+#      print(f"Trying to Create {p} with Parent {command.n}")
       if command.n == -1 or command.n in v1_PCBs:
-        print(f"Created {p} with Parent {command.n}")
+#        print(f"Created {p} with Parent {command.n}")
         v1_PCBs[p] = PCB(command.n)
         
         if command.n != -1:
           v1_PCBs[command.n].__set_children__(p)
         p = p + 1
-      else:
-        print("Parent DNE!")
+#      else:
+#        print("Parent DNE!")
     elif command.command == 'destroy':
-      print(f"Destroy {command.n}:")
+#      print(f"Destroy {command.n}:")
       destroy(command.n,v1_PCBs)
     
     showProcessInfo(v1_PCBs)
@@ -61,15 +61,15 @@ def create(parent):
   PCBs[parent].__set_children__(len(PCBs)-1)
 
 def destroy(process,PCBs):
-  print(f"Destroy {process}:")
+#  print(f"Destroy {process}:")
   parent_index = PCBs[process].parent
 
   PCBs[parent_index].children.remove(process)
-  print(PCBs[process].children)
+#  print(PCBs[process].children)
   while PCBs[process].children != []:
     for child_index  in PCBs[process].children:
       destroy(child_index,PCBs)
-  print(f"Destroying: {PCBs[process]}")
+#  print(f"Destroying: {PCBs[process]}")
   del PCBs[process]  
 
 
