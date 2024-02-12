@@ -7,7 +7,7 @@ import time
 class PCB:
   def __init__(self,parent):
     self.parent = parent
-    self.children = [None]
+    self.children = []
 
   def __set_children__(self,children):
       self.children.append(children)
@@ -20,8 +20,8 @@ class commands:
     self.n = n
 
 def showProcessInfo(PCBs):
-  for x in range(0,len(PCBs)):
-    if PCBs[x].children[0]!=None:
+  for x in PCBs:
+    if PCBs[x].children!=[]:
       children_list = ""
       for c in PCBs[x].children:
         children_list= children_list + " "
@@ -33,18 +33,23 @@ def showProcessInfo(PCBs):
 
 def v1(command_list):
   print("v1:")
-  v1_PCBs = list()
+  p = 0
+  v1_PCBs = {}
   for command in command_list:
     if command.command == 'create':
-      if command.n in range (0, len(v1_PCBs)) or command.n == -1: 
-        if command.n == -1 or v1_PCBs[command.n] != None: 
-          v1_PCBs.append(PCB(command.n))
-          if command.n != -1:
-            v1_PCBs[command.n].__set_children__(len(v1_PCBs)-1)
+      print(f"Trying to Create {p} with Parent {command.n}")
+      if command.n == -1 or command.n in v1_PCBs:
+        print(f"Created {p} with Parent {command.n}")
+        v1_PCBs[p] = PCB(command.n)
+        
+        if command.n != -1:
+          v1_PCBs[command.n].__set_children__(p)
+        p = p + 1
       else:
-        print("Parent is out of range!")
+        print("Parent DNE!")
     elif command.command == 'destroy':
-      v1_PCBs.remove(command.n)
+      print(f"Destroy {command.n}:")
+      destroy(command.n,v1_PCBs)
     
     showProcessInfo(v1_PCBs)
 
@@ -55,10 +60,17 @@ def create(parent):
   PCBs.append(PCB(parent))
   PCBs[parent].__set_children__(len(PCBs)-1)
 
-def destroy(p):
-  for x in PCBs[p].children:
-    destroy[x]
-  PCBs[p] = None
+def destroy(process,PCBs):
+  print(f"Destroy {process}:")
+  parent_index = PCBs[process].parent
+
+  PCBs[parent_index].children.remove(process)
+  print(PCBs[process].children)
+  while PCBs[process].children != []:
+    for child_index  in PCBs[process].children:
+      destroy(child_index,PCBs)
+  print(f"Destroying: {PCBs[process]}")
+  del PCBs[process]  
 
 
 
