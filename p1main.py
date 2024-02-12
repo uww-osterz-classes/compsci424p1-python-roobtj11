@@ -51,7 +51,7 @@ def v1(command_list):
 #      print(f"Destroy {command.n}:")
       destroy(command.n,v1_PCBs)
     
-    showProcessInfo(v1_PCBs)
+  showProcessInfo(v1_PCBs)
 
 
 
