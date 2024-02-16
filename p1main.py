@@ -36,6 +36,7 @@ def v1(Commands,show_output):
       case 'c':
         parent = command[1]
         process = First_Available_Process(PCB)
+        if process == False: break
         #print(f"Creating Process {process} with parent {parent}")
         v1_create(PCB,process,parent)
       case 'd':
@@ -92,6 +93,7 @@ def v2(commands,show_output):
           parent = command[1]
           #print(f"\nRunning command 'Create' with Parent {parent}")
           process = First_Available_Process(PCB)
+          if process == False: break
           #print(f"Creating Process {process} with parent {parent}")
           v2_create(PCB,process,parent)
         case 'd':
@@ -244,12 +246,10 @@ def main():
     v1(Commands,False)
   v2_end = time.process_time_ns()
   v1_running = v1_end-v1_start
-  v2_running = v2_end-v1_start
-  print(f"V1 start time: {v1_start}")
-  print(f"V1 end time: {v1_end}")
-  print(f"V1 Running Time: {v1_running}")
-  print(f"V2 start time: {v2_start}")
-  print(f"V2 end time: {v2_end}")
+  v2_running = v2_end-v2_start
+  print(f"V1 start time: {v1_start}, V1 end time: {v1_end}")
+  print(f"V1 Running Time: {v1_running}\n")
+  print(f"V2 start time: {v2_start}, V2 end time: {v2_end}")
   print(f"V2 Running Time: {v2_running}")  
 
 main()
