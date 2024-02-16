@@ -1,0 +1,15 @@
+create 0
+create 1
+create 2
+create 1
+create 0
+create 3
+create 0
+destroy 1
+create 0
+create 8
+create 8
+create 9
+create 8
+create 9
+end
