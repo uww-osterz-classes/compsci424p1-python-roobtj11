@@ -30,19 +30,36 @@ def find_OlderSib(PCB,older_sib):
   else:
     return find_OlderSib(PCB,PCB[older_sib].ysib)
 
-def get_ys(PCBs,pid,children):
-  if PCBs[pid].ysib!= None:
-    children.append(get_ys(PCBs,PCBs[pid].ysib,children))
+def get_ys(PCBs,pid):
+  if PCBs[pid].ysib != None:
+    a = [True, PCBs[pid].ysib]
+    return a
+  else:
+    return [False]
 
 def showV2(PCBs):
   for x in PCBs:
     children = []
+    t=True
     if PCBs[x].fchild != None:
       children.append(PCBs[x].fchild)
-      get_ys(PCBs,PCBs[x].fchild, children)
+      child = PCBs[x].fchild
+      while (t==True):
+        result = get_ys(PCBs,child)
+        if result[0]:
+          child = result[1]
+          children.append(child)
+        else:
+          t = result[0]
       print(f"Process {x}: parent is {PCBs[x].parent}, and has children {children}")
     else:
       print(f"Process {x}: parent is {PCBs[x].parent}, and has no children")
+def destroy_v2(PCBs,pid):
+  if PCBs[pid].fchild == None:
+    parent = PCBs[pid].parent
+    if PCBs[parent].fchild == pid:
+      #keep Going
+      k
 
 def v2(command_list):
   print("v2:")
@@ -55,7 +72,7 @@ def v2(command_list):
       PID_parent = command.n
       print(f"Trying to Create {pid} with Parent {PID_parent}")
       if PID_parent in v2_PCBs:
-        print(f"Created {pid} with Parent {PID_parent}")
+        
         #check for Older Sibiling:
         if v2_PCBs[PID_parent].fchild != None:
           osib = find_OlderSib(v2_PCBs,v2_PCBs[PID_parent].fchild)
@@ -64,12 +81,14 @@ def v2(command_list):
         else:
           v2_PCBs[PID_parent].fchild = pid
           v2_PCBs[pid] = PCBv2(PID_parent)
+        print(f"Created {pid} with Parent {PID_parent}")
         pid+=1
       else:
         print(f"ERROR: Parent {command.n} does not exist")
     elif command.command == 'destroy':
       pid = command.n
       print(f"Trying to destroy {pid}")
+      destroy_v2(v2_PCBs,pid)
     showV2(v2_PCBs)
 
 
