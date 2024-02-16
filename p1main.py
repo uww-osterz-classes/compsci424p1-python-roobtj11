@@ -226,32 +226,31 @@ def Request_Input():
     print("Invalid Argument")
     return [False,"Invalid Argument"]
 
-def run_function_silently(func,commands):
+def run_function_silently_x200(func,commands):
     with open(os.devnull, 'w') as null_file:
         with redirect_stdout(null_file):
-          func(commands)
+          for _ in range(200):
+            func(commands)
 
 def main():
   Commands=get_commands()
   print("Beginning V1:\n`")
   v1(Commands)
-  print("\nEnd of V1\n")
+  print("\nEnd of V1___________________________________________________________________\n")
   print("Beginning of V2:\n")
   v2(Commands)
   print("\nEnd of V2")
   #input("Press Enter to start timings")
   print("Running V1 200 Times")
   v1_start = (time.process_time_ns()/ 1e9)
-  for _ in range(200):
-    run_function_silently(v1,Commands)
+  run_function_silently_x200(v1,Commands)
   v1_end = (time.process_time_ns()/ 1e9)
   v1_running = v1_end-v1_start
   print(f"V1 start time: {v1_start} sec, V1 end time: {v1_end} sec")
   print(f"V1 Running Time: {v1_running} sec\n")
   print("Running V2 200 Times")
   v2_start = (time.process_time_ns()/ 1e9)
-  for _ in range(200):
-    run_function_silently(v2,Commands)
+  run_function_silently_x200(v2,Commands)
   v2_end = (time.process_time_ns()/ 1e9)
   v2_running = v2_end-v2_start
   print(f"V2 start time: {v2_start} sec, V2 end time: {v2_end} sec")
