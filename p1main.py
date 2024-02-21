@@ -122,7 +122,7 @@ def v2_showProcessInfo(PCB):
           break
       print(f"Process {process}: Parent is {parent} Children are {children}")
     else:
-      print(f"Process {process}: Parent is {parent} and has no children.")
+      print(f"Process {process}: Parent is {parent} and has no children")
   print("")
 
     
@@ -234,7 +234,7 @@ def run_function_silently_x200(func,commands):
 
 def main():
   Commands=get_commands()
-  print("Beginning V1:\n`")
+  print("Beginning V1:\n")
   v1(Commands)
   print("\nEnd of V1___________________________________________________________________\n")
   print("Beginning of V2:\n")
